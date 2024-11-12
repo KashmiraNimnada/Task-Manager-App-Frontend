@@ -1,12 +1,16 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import Task from './pages/Task'
 
 function App() {
 
 
   return (
-    <div>
-      <h1>asdad</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Task />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
