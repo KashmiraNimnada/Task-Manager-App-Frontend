@@ -64,21 +64,32 @@ function Task() {
         loadTasks();
     },[])
 
+    async function deleteTask(id:number) {
+        try {
+            await axios.delete(`http://localhost:8080/tasks/${id}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function setForDelete(id:number) {
+        deleteTask(id)
+    }
 
     return (
         <div className="h-screen w-full bg-gray-100 pt-10 px-10">
             <div className="place-items-center">
-                <div className="my-5">
+                <div className="mt-5 mb-10">
                     <h1 className="text-4xl text-red-400 border-b-4">Here is your task list</h1>
                 </div>
                 <table className="bg-white">
                     <thead>
                         <tr>
-                            <th className="text-xl font-bold p-4">Name</th>
-                            <th className="text-xl font-bold p-4">Description</th>
-                            <th className="text-xl font-bold p-4">Due Date</th>
-                            <th className="text-xl font-bold p-4">Mark As Done</th>
-                            <th className="text-xl font-bold p-4">Delete</th>
+                            <th className="text-xl font-bold p-4 text-center">Name</th>
+                            <th className="text-xl font-bold p-4 text-center">Description</th>
+                            <th className="text-xl font-bold p-4 text-center">Due Date</th>
+                            <th className="text-xl font-bold p-4 text-center">Mark As Done</th>
+                            <th className="text-xl font-bold p-4 text-center">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,25 +97,29 @@ function Task() {
                             if(task.status=="COMPLETED") {
                                 return (
                                     <tr key={task.id}>
-                                        <td className="px-6 py-2 line-through">{task.name}</td>
-                                        <td className="px-6 py-2 line-through">{task.description}</td>
-                                        <td className="px-6 py-2 line-through">{task.duedate}</td>
+                                        <td className="px-6 py-2 line-through text-center">{task.name}</td>
+                                        <td className="px-6 py-2 line-through text-center">{task.description}</td>
+                                        <td className="px-6 py-2 line-through text-center">{task.duedate}</td>
                                         <td className="px-6 py-2">
                                             <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
                                         </td>
-                                        <td className="px-6 py-2 text-center"></td>
+                                        <td className="px-6 py-2 text-center">
+                                            <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
+                                        </td>
                                     </tr>
                                 )
                             } else {
                                 return (
                                     <tr key={task.id}>
-                                        <td className="px-6 py-2">{task.name}</td>
-                                        <td className="px-6 py-2">{task.description}</td>
-                                        <td className="px-6 py-2">{task.duedate}</td>
-                                        <td className="px-6 py-2">
+                                        <td className="px-6 py-2 text-center">{task.name}</td>
+                                        <td className="px-6 py-2 text-center">{task.description}</td>
+                                        <td className="px-6 py-2 text-center">{task.duedate}</td>
+                                        <td className="px-6 py-2 text-center">
                                             <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
                                         </td>
-                                        <td className="px-6 py-2 text-center"></td>
+                                        <td className="px-6 py-2 text-center">
+                                            <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
+                                        </td>
                                     </tr>
                                 )
                             }
