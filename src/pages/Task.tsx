@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import TaskType from "../types/TaskType";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Task() {
 
     const [tasks,setTasks] = useState<TaskType[]>([]);
     const [completed,isCompleted] = useState<boolean>(false);
+
+    
 
     async function loadTasks() {
         try {
@@ -67,6 +70,7 @@ function Task() {
     async function deleteTask(id:number) {
         try {
             await axios.delete(`http://localhost:8080/tasks/${id}`)
+            loadTasks();
         } catch (error) {
             console.log(error)
         }
@@ -76,13 +80,19 @@ function Task() {
         deleteTask(id)
     }
 
+    const nav = useNavigate();
+
+    function setNav() {
+        nav("/create")
+    }
+
     return (
         <div className="h-screen w-full bg-gray-100 pt-10 px-10">
-            <div className="place-items-center">
+            <div className="place-items-center flex flex-col p-5">
                 <div className="mt-5 mb-10">
-                    <h1 className="text-4xl text-red-400 border-b-4">Here is your task list</h1>
+                    <h1 className="text-4xl text-red-400 border-b-8">Here is your task list</h1>
                 </div>
-                <table className="bg-white">
+                <table className="bg-white mb-10 shadow-lg rounded-xl">
                     <thead>
                         <tr>
                             <th className="text-xl font-bold p-4 text-center">Name</th>
@@ -126,6 +136,10 @@ function Task() {
                         })}
                     </tbody>
                 </table>
+                <div className="text-center text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg text-white mb-10 shadow-lg p-2 cursor-pointer w-[500px] hover:scale-x-105 duration-300" onClick={setNav}>
+                    <p>Add a new task</p>
+                </div>
+
             </div>
         </div>
     )
