@@ -32,9 +32,10 @@ function Login() {
         try {
             const response = await axios.post("http://localhost:8080/auth/login",data)
             console.log(response)
-            login(response.data,username);
+            login(response.data,username,email);
             navigate("/")
             console.log(username)
+            console.log(email)
         } catch (error) {
             setError("There was an error logging in")
         }

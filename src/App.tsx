@@ -5,6 +5,7 @@ import CreateTask from './pages/CreateTask'
 import { AuthProvider } from './context/AuthContext'
 import Login from './pages/auth/Login'
 import ProtectedRoute from './components/ProtectedRoute'
+import Signup from './pages/auth/Signup'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/create" element={<CreateTask />} />
           </Route>
           <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

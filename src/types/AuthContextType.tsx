@@ -1,8 +1,10 @@
 interface AuthContextType {
     isAuthenticated: boolean,
-    jwtToken: string | null,
-    login: (jwtToken: string) => void,
+    jwtToken: string,
+    login: (jwtToken: string,username: string,email: string) => void,
     logout: () => void,
+    username: string,
+    email: string
 }
 
 export default AuthContextType;

@@ -3,16 +3,14 @@ import TaskType from "../types/TaskType";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-// import { jwtDecode } from 'jwt-decode';
+
 
 function Task() {
 
     const [tasks,setTasks] = useState<TaskType[]>([]);
     const [completed,isCompleted] = useState<boolean>(false);
 
-    const { isAuthenticated , jwtToken , username } = useAuth();
-
-    // const [realusername,setRealusername] = useState<string>("");
+    const { isAuthenticated , jwtToken , username ,email } = useAuth();
 
     const config = {
         headers: {
@@ -33,16 +31,6 @@ function Task() {
 
     useEffect(function(){
         if(isAuthenticated) {
-            // const decodedToken = jwtDecode(jwtToken);
-            // const realuser = decodedToken.sub
-            // console.log(typeof realuser);
-            // const result: string = realuser ?? 'Default String';
-            // console.log(result);
-            // setRealusername(result);
-            // console.log(typeof result)
-            // console.log(realuser);
-            // console.log(realusername);
-            // console.log(jwtToken);
             console.log(username);
             console.log(jwtToken);
             loadTasks();
@@ -132,36 +120,39 @@ function Task() {
                     </thead>
                     <tbody>
                         {tasks && tasks.map(function(task:TaskType){
-                            // if(realusername==task.user.)
-                            if(task.status=="COMPLETED") {
-                                return (
-                                    <tr>
-                                        <td className="px-6 py-3 line-through text-center">{task.name}</td>
-                                        <td className="px-6 py-3 line-through text-center">{task.description}</td>
-                                        <td className="px-6 py-3 line-through text-center">{task.duedate}</td>
-                                        <td className="px-6 py-3">
-                                            <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
-                                        </td>
-                                        <td className="px-6 py-3 text-center">
-                                            <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            } else {
-                                return (
-                                    <tr>
-                                        <td className="px-6 py-3 text-center">{task.name}</td>
-                                        <td className="px-6 py-3 text-center">{task.description}</td>
-                                        <td className="px-6 py-3 text-center">{task.duedate}</td>
-                                        <td className="px-6 py-3 text-center">
-                                            <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
-                                        </td>
-                                        <td className="px-6 py-3 text-center">
-                                            <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            }
+                            console.log(email);
+                            if(email==task.user.email) {
+                            console.log(email==task.user.email);
+                                if(task.status=="COMPLETED") {
+                                    return (
+                                        <tr>
+                                            <td className="px-6 py-3 line-through text-center">{task.name}</td>
+                                            <td className="px-6 py-3 line-through text-center">{task.description}</td>
+                                            <td className="px-6 py-3 line-through text-center">{task.duedate}</td>
+                                            <td className="px-6 py-3">
+                                                <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
+                                            </td>
+                                            <td className="px-6 py-3 text-center">
+                                                <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                } else {
+                                    return (
+                                        <tr>
+                                            <td className="px-6 py-3 text-center">{task.name}</td>
+                                            <td className="px-6 py-3 text-center">{task.description}</td>
+                                            <td className="px-6 py-3 text-center">{task.duedate}</td>
+                                            <td className="px-6 py-3 text-center">
+                                                <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
+                                            </td>
+                                            <td className="px-6 py-3 text-center">
+                                                <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                            }  
                         })}
                     </tbody>
                 </table>
