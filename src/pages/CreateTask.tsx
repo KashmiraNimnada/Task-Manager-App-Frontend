@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function CreateTask() {
     
@@ -10,8 +11,15 @@ function CreateTask() {
     const [duemonth,setDuemonth] = useState<string>("");
     const [dueday,setDueDay] = useState<string>("");
 
+    const { isAuthenticated , jwtToken } = useAuth();
 
     const nav2 = useNavigate();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${jwtToken}`
+        }
+    }
 
     async function submit() {
 
@@ -25,9 +33,12 @@ function CreateTask() {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/tasks",data)
-            console.log(response.data)
-            nav2("/")
+            if(isAuthenticated) {
+                const response = await axios.post("http://localhost:8080/tasks",data,config)
+                console.log(response.data)
+                nav2("/")
+            }
+            
         } catch (error) {
             console.log(error)
         }
