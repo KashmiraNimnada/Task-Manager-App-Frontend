@@ -3,16 +3,16 @@ import TaskType from "../types/TaskType";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { jwtDecode } from 'jwt-decode';
+// import { jwtDecode } from 'jwt-decode';
 
 function Task() {
 
     const [tasks,setTasks] = useState<TaskType[]>([]);
     const [completed,isCompleted] = useState<boolean>(false);
 
-    const { isAuthenticated , jwtToken } = useAuth();
+    const { isAuthenticated , jwtToken , username } = useAuth();
 
-    const [realusername,setRealusername] = useState<string | undefined>(undefined);
+    // const [realusername,setRealusername] = useState<string>("");
 
     const config = {
         headers: {
@@ -33,11 +33,18 @@ function Task() {
 
     useEffect(function(){
         if(isAuthenticated) {
-            const decodedToken = jwtDecode(jwtToken);
-            const realuser = decodedToken.sub
-            console.log(realuser)
-            setRealusername(realuser);
-            console.log(realusername)
+            // const decodedToken = jwtDecode(jwtToken);
+            // const realuser = decodedToken.sub
+            // console.log(typeof realuser);
+            // const result: string = realuser ?? 'Default String';
+            // console.log(result);
+            // setRealusername(result);
+            // console.log(typeof result)
+            // console.log(realuser);
+            // console.log(realusername);
+            // console.log(jwtToken);
+            console.log(username);
+            console.log(jwtToken);
             loadTasks();
         }
     },[isAuthenticated])
@@ -125,9 +132,10 @@ function Task() {
                     </thead>
                     <tbody>
                         {tasks && tasks.map(function(task:TaskType){
+                            // if(realusername==task.user.)
                             if(task.status=="COMPLETED") {
                                 return (
-                                    <tr key={task.id}>
+                                    <tr>
                                         <td className="px-6 py-3 line-through text-center">{task.name}</td>
                                         <td className="px-6 py-3 line-through text-center">{task.description}</td>
                                         <td className="px-6 py-3 line-through text-center">{task.duedate}</td>
@@ -141,7 +149,7 @@ function Task() {
                                 )
                             } else {
                                 return (
-                                    <tr key={task.id}>
+                                    <tr>
                                         <td className="px-6 py-3 text-center">{task.name}</td>
                                         <td className="px-6 py-3 text-center">{task.description}</td>
                                         <td className="px-6 py-3 text-center">{task.duedate}</td>

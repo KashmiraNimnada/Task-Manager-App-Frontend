@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { jwtDecode } from 'jwt-decode';
 
 function CreateTask() {
     
@@ -11,7 +12,7 @@ function CreateTask() {
     const [duemonth,setDuemonth] = useState<string>("");
     const [dueday,setDueDay] = useState<string>("");
 
-    const { isAuthenticated , jwtToken } = useAuth();
+    const { isAuthenticated , jwtToken ,username } = useAuth();
 
     const nav2 = useNavigate();
 
@@ -23,13 +24,13 @@ function CreateTask() {
 
     async function submit() {
 
-        console.log({taskname})
+        console.log(username)
         const data = {
             "name" : taskname,
             "description" : description,
             "duedate" : dueyear + "-" + duemonth + "-" +dueday,
             "status" : "PENDING",
-            "user_id" : 3
+            "user_name" : username
         }
 
         try {
