@@ -42,7 +42,7 @@ function Login() {
     }
 
     return (
-        <div className="h-screen w-full items-center p-36 justify-center bg-gray-100">
+        <div className="h-screen w-full items-center pt-20 justify-center bg-gray-100">
             <div className="max-w-[500px] mx-auto px-10 pb-10 pt-2 bg-white rounded-xl shadow-lg">
                 <div>
                     <h1 className="text-center text-4xl pt-2 pb-8 font-normal text-neutral-700">Login</h1>
