@@ -3,6 +3,7 @@ import TaskType from "../types/TaskType";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { jwtDecode } from 'jwt-decode';
 
 function Task() {
 
@@ -10,6 +11,8 @@ function Task() {
     const [completed,isCompleted] = useState<boolean>(false);
 
     const { isAuthenticated , jwtToken } = useAuth();
+
+    const [realusername,setRealusername] = useState<string | undefined>(undefined);
 
     const config = {
         headers: {
@@ -30,6 +33,11 @@ function Task() {
 
     useEffect(function(){
         if(isAuthenticated) {
+            const decodedToken = jwtDecode(jwtToken);
+            const realuser = decodedToken.sub
+            console.log(realuser)
+            setRealusername(realuser);
+            console.log(realusername)
             loadTasks();
         }
     },[isAuthenticated])
