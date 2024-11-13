@@ -35,7 +35,7 @@ function Login() {
             login(response.data)
             navigate("/create")
         } catch (error) {
-            console.log(error)
+            setError("There was an error logging in")
         }
     }
 
