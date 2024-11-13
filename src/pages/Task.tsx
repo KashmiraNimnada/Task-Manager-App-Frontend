@@ -92,7 +92,8 @@ function Task() {
                 <div className="mt-5 mb-10">
                     <h1 className="text-4xl text-red-400 border-b-8">Here is your task list</h1>
                 </div>
-                <table className="bg-white mb-10 shadow-lg rounded-xl">
+                <div className="bg-white mb-10 p-5 shadow-lg rounded-xl">
+                <table>
                     <thead>
                         <tr>
                             <th className="text-xl font-bold p-4 text-center">Name</th>
@@ -107,13 +108,13 @@ function Task() {
                             if(task.status=="COMPLETED") {
                                 return (
                                     <tr key={task.id}>
-                                        <td className="px-6 py-2 line-through text-center">{task.name}</td>
-                                        <td className="px-6 py-2 line-through text-center">{task.description}</td>
-                                        <td className="px-6 py-2 line-through text-center">{task.duedate}</td>
-                                        <td className="px-6 py-2">
+                                        <td className="px-6 py-3 line-through text-center">{task.name}</td>
+                                        <td className="px-6 py-3 line-through text-center">{task.description}</td>
+                                        <td className="px-6 py-3 line-through text-center">{task.duedate}</td>
+                                        <td className="px-6 py-3">
                                             <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
                                         </td>
-                                        <td className="px-6 py-2 text-center">
+                                        <td className="px-6 py-3 text-center">
                                             <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
                                         </td>
                                     </tr>
@@ -121,13 +122,13 @@ function Task() {
                             } else {
                                 return (
                                     <tr key={task.id}>
-                                        <td className="px-6 py-2 text-center">{task.name}</td>
-                                        <td className="px-6 py-2 text-center">{task.description}</td>
-                                        <td className="px-6 py-2 text-center">{task.duedate}</td>
-                                        <td className="px-6 py-2 text-center">
+                                        <td className="px-6 py-3 text-center">{task.name}</td>
+                                        <td className="px-6 py-3 text-center">{task.description}</td>
+                                        <td className="px-6 py-3 text-center">{task.duedate}</td>
+                                        <td className="px-6 py-3 text-center">
                                             <button onClick={() => setStatus(task.id)} className="bg-gradient-to-r text-sm from-cyan-500 to-blue-500 rounded-md p-2 hover:scale-105 duration-300 text-white">{task.status}</button>
                                         </td>
-                                        <td className="px-6 py-2 text-center">
+                                        <td className="px-6 py-3 text-center">
                                             <button className="bg-gradient-to-r from-red-400 to-red-600 text-sm rounded-md p-2 hover:scale-105 duration-300 text-white" onClick={() => setForDelete(task.id)}>Delete</button>
                                         </td>
                                     </tr>
@@ -136,6 +137,7 @@ function Task() {
                         })}
                     </tbody>
                 </table>
+                </div>
                 <div className="text-center text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg text-white mb-10 shadow-lg p-2 cursor-pointer w-[500px] hover:scale-x-105 duration-300" onClick={setNav}>
                     <p>Add a new task</p>
                 </div>

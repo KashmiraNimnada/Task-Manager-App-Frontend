@@ -36,7 +36,7 @@ function CreateTask() {
 
 
     return (
-        <div className="h-screen w-full bg-gray-100 pt-32 px-10 place-items-center">
+        <div className="h-screen w-full bg-gray-100 pt-10 px-10 place-items-center">
             <p className="text-4xl text-red-400 border-b-8 mb-10">Create Task</p>
             <div className="bg-white shadow-lg w-[600px] p-4 rounded-xl">
                         <div className="flex flex-col pl-2">
