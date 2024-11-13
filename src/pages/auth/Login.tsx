@@ -33,7 +33,7 @@ function Login() {
             const response = await axios.post("http://localhost:8080/auth/login",data)
             console.log(response)
             login(response.data)
-            navigate("/create")
+            navigate("/")
         } catch (error) {
             setError("There was an error logging in")
         }

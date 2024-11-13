@@ -2,23 +2,37 @@ import { useEffect, useState } from "react";
 import TaskType from "../types/TaskType";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Task() {
 
     const [tasks,setTasks] = useState<TaskType[]>([]);
     const [completed,isCompleted] = useState<boolean>(false);
 
-    
+    const { isAuthenticated , jwtToken } = useAuth();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${jwtToken}`
+        }
+    }
 
     async function loadTasks() {
         try {
-            const response = await axios.get("http://localhost:8080/tasks");
+            console.log(config)
+            const response = await axios.get("http://localhost:8080/tasks",config);
             console.log(response.data)
             setTasks(response.data)
         } catch (error) {
             console.log(error)
         }
     }
+
+    useEffect(function(){
+        if(isAuthenticated) {
+            loadTasks();
+        }
+    },[isAuthenticated])
 
     async function updateTask(id:number) {
         if(completed) {
@@ -31,7 +45,7 @@ function Task() {
             }
 
             try {
-                const response1 = await axios.put(`http://localhost:8080/tasks/${id}`,req1)
+                const response1 = await axios.put(`http://localhost:8080/tasks/${id}`,req1,config)
                 console.log(response1.data);
                 loadTasks()
             } catch (error) {
@@ -48,7 +62,7 @@ function Task() {
             }
 
             try {
-                const response2 = await axios.put(`http://localhost:8080/tasks/${id}`,req2)
+                const response2 = await axios.put(`http://localhost:8080/tasks/${id}`,req2,config)
                 console.log(response2.data)
                 loadTasks()
             } catch (error) {
@@ -63,13 +77,11 @@ function Task() {
         updateTask(id);
     }
 
-    useEffect(function(){
-        loadTasks();
-    },[])
+    
 
     async function deleteTask(id:number) {
         try {
-            await axios.delete(`http://localhost:8080/tasks/${id}`)
+            await axios.delete(`http://localhost:8080/tasks/${id}`,config)
             loadTasks();
         } catch (error) {
             console.log(error)
