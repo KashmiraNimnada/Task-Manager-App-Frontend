@@ -19,7 +19,7 @@ function Login() {
 
         event.preventDefault();
 
-        if(email === "" || password === ""){
+        if(email === "" || password === "" || username === ""){
             setError("Username and password are required");
         }
 
@@ -41,8 +41,15 @@ function Login() {
         }
     }
 
+
+    const nav = useNavigate();
+
+    function goToSignup() {
+        nav("/auth/signup")
+    }
+
     return (
-        <div className="h-screen w-full items-center pt-20 justify-center bg-gray-100">
+        <div className="h-screen w-full items-center pt-10 justify-center bg-gray-100">
             <div className="max-w-[500px] mx-auto px-10 pb-10 pt-2 bg-white rounded-xl shadow-lg">
                 <div>
                     <h1 className="text-center text-4xl pt-2 pb-8 font-normal text-neutral-700">Login</h1>
@@ -76,9 +83,17 @@ function Login() {
                         </div>
                     }
 
-                    <div>
+                    <div className="mb-3">
                         <button type="submit" className="bg-gradient-to-r from-cyan-500 to-blue-500 w-full p-2 rounded-md text-white text-lg hover:scale-x-105 duration-300">
                             Login
+                        </button>
+                    </div>
+                    <div className="items-center text-center">
+                        <p className="text-center font-bold text-xl">OR</p>
+                    </div>
+                    <div className="mb-3 mt-3">
+                        <button onClick={goToSignup} className="bg-gradient-to-r from-lime-500 to-green-400 w-full p-2 rounded-md text-white text-lg hover:scale-x-105 duration-300">
+                            Sign Up
                         </button>
                     </div>
                 </form>

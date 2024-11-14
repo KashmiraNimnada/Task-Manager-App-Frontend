@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
 
@@ -13,20 +13,29 @@ function Signup() {
     const nav = useNavigate();
 
     async function submit(event: any) {
-
         event.preventDefault();
+        if(email === "") {
+            setError("Enter your email");
 
-        if(createdpw==checkpw) {
-            const data = {
-                "email" : email,
-                "username" : username,
-                "password" : createdpw
-            }
-            const response = await axios.post("http://localhost:8080/auth/users",data)
-            console.log(response)
-            nav("/auth/login")
+        }else if(username === ""){
+            setError("Enter your username");
+        }else if(createdpw === ""){
+            setError("Enter your password");
+        }else if(checkpw === ""){
+            setError("Confirm your password");
         }else {
-            setError("Passwords are not matching");
+            if(createdpw==checkpw) {
+                const data = {
+                    "email" : email,
+                    "username" : username,
+                    "password" : createdpw
+                }
+                const response = await axios.post("http://localhost:8080/auth/users",data)
+                console.log(response)
+                nav("/auth/login")
+            }else {
+                setError("Passwords are not matching");
+            }
         }
 
     }
@@ -42,24 +51,28 @@ function Signup() {
                         <label className="mb-2">Email</label>
                         <input type="text" onChange={function(event) {
                             setEmail(event.target.value);
+                            setError("");
                         }} placeholder="Enter your email" className="border w-full mb-2 py-2 px-4 rounded-md"/>
                     </div>
                     <div className="flex flex-col pl-2">
                         <label className="mb-2">Username</label>
                         <input type="text" onChange={function(event) {
                             setUsername(event.target.value);
+                            setError("");
                         }} placeholder="Enter your username" className="border w-full mb-2 py-2 px-4 rounded-md"/>
                     </div>
                     <div className="flex flex-col pl-2">
                         <label className="mb-2">Create password</label>
                         <input type="password" onChange={function(event){
                             setCreatepw(event.target.value);
+                            setError("");
                         }} placeholder="Create password" className="border w-full mb-8 py-2 px-4 rounded-md"/>
                     </div>
                     <div className="flex flex-col pl-2">
                         <label className="mb-2">Enter password again</label>
                         <input type="password" onChange={function(event){
                             setChechpw(event.target.value);
+                            setError("");
                         }} placeholder="Enter password again" className="border w-full mb-8 py-2 px-4 rounded-md"/>
                     </div>
                     {error && 
